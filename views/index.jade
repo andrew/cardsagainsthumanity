@@ -1,0 +1,29 @@
+html
+  head
+    link(rel='stylesheet', href='/styles.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  body
+    h1.question= game.question.text
+    .content
+      if judge
+        h2.player-type Judge
+      else
+        h2.player-type Player
+      hr/
+
+      if judge
+        ol
+          each answer in game.answers
+            li
+              = answer
+              form(action='/game/#{game.uid}/winner',method='post')
+                input(type='hidden',name='answer',value=answer.text)
+                button Pick Winner
+      else
+        ol
+          each answer in user.answers
+            li
+              = answer.text
+              form(action='/game/#{game.uid}',method='post')
+                input(type='hidden',name='answer',value=answer.text)
+                button Choose Answer
